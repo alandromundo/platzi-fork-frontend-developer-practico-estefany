@@ -3,30 +3,62 @@ const desktopMenu = document.querySelector(".desktop-menu");
 const burgerMenu = document.querySelector("img.menu");
 const shoppingCartButton = document.querySelector(".navbar-shopping-cart");
 const shoppingCartMenu = document.querySelector(".product-detail-cart");
+const productDetailMenu = document.querySelector(".product-detail");
+const productDetailCloseButton = document.querySelector(
+  ".product-detail-close"
+);
 const mobileMenu = document.querySelector(".mobile-menu");
 const cardsContainer = document.querySelector(".cards-container");
+
+const menus = [desktopMenu, shoppingCartMenu, mobileMenu, productDetailMenu];
 
 menuEmail.addEventListener("click", toggleDesktopMenu);
 burgerMenu.addEventListener("click", toggleMobileMenu);
 shoppingCartButton.addEventListener("click", toggleShoppingCartMenu);
+productDetailCloseButton.addEventListener("click", closeProductDetailMenu);
 
 function toggleDesktopMenu() {
-  toggleMenusBetween(desktopMenu, shoppingCartMenu);
+  openCloseMenu(desktopMenu);
 }
 
 function toggleMobileMenu() {
-  toggleMenusBetween(mobileMenu, shoppingCartMenu);
+  openCloseMenu(mobileMenu);
 }
 
 function toggleShoppingCartMenu() {
-  toggleMenusBetween(shoppingCartMenu, mobileMenu);
+  openCloseMenu(shoppingCartMenu);
 }
 
-function toggleMenusBetween(firstMenu, secondMenu) {
-  firstMenu.classList.toggle("inactive");
-  if (!secondMenu.classList.contains("inactive")) {
-    secondMenu.classList.add("inactive");
+function toggleProductDetailMenu() {
+  openCloseMenu(productDetailMenu);
+}
+
+function openCloseMenu(menuToInteract) {
+  // Si el menú que intentamos abrir ya está abierto, entonces lo que queremos es cerrarlo
+  if (!menuToInteract.classList.contains("inactive")) {
+    menuToInteract.classList.add("inactive");
   }
+  // Si intentamos abrir otro menu que no sea el que ya esta abierto entonces seguimos la siguiente lógica: cerrar los demás menus
+  // y abrir el menú de interés.
+  else {
+    // Recorremos el arreglo de menus y filtramos el menú de interés que presionamos para removerle la clase inactive, y a los demás
+    // agregarle la clase inactive
+    for (const menuItem of menus) {
+      if (!menuItem.classList.contains(menuToInteract.classList[0])) {
+        menuItem.classList.add("inactive");
+      } else {
+        menuItem.classList.remove("inactive");
+      }
+    }
+  }
+}
+
+// function openProductDetailMenu() {
+//   productDetailMenu.classList.remove("inactive");
+// }
+
+function closeProductDetailMenu() {
+  productDetailMenu.classList.add("inactive");
 }
 
 const productList = [];
@@ -86,10 +118,12 @@ function renderProducts(arr) {
   for (product of arr) {
     const productCard = document.createElement("div");
     productCard.classList.add("product-card");
+    // productCard.addEventListener("click", toggleProductDetailMenu);
 
     // product= {name, price, image} -> product.image
     const productImg = document.createElement("img");
     productImg.setAttribute("src", product.image);
+    productImg.addEventListener("click", toggleProductDetailMenu);
 
     const productOverview = document.createElement("div");
     productOverview.classList.add("product-overview");
