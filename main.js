@@ -2,7 +2,7 @@ const menuEmail = document.querySelector(".navbar-email");
 const desktopMenu = document.querySelector(".desktop-menu");
 const burgerMenu = document.querySelector("img.menu");
 const shoppingCartButton = document.querySelector(".navbar-shopping-cart");
-const shoppingCartMenu = document.querySelector(".product-detail");
+const shoppingCartMenu = document.querySelector(".product-detail-cart");
 const mobileMenu = document.querySelector(".mobile-menu");
 const cardsContainer = document.querySelector(".cards-container");
 
@@ -91,28 +91,28 @@ function renderProducts(arr) {
     const productImg = document.createElement("img");
     productImg.setAttribute("src", product.image);
 
-    const productInfo = document.createElement("div");
-    productInfo.classList.add("product-info");
+    const productOverview = document.createElement("div");
+    productOverview.classList.add("product-overview");
 
-    const productInfoDiv = document.createElement("div");
+    const productOverviewDiv = document.createElement("div");
 
     const productPrice = document.createElement("p");
     productPrice.innerText = "$" + product.price;
     const productName = document.createElement("p");
     productName.innerText = product.name;
 
-    productInfoDiv.appendChild(productPrice);
-    productInfoDiv.appendChild(productName);
+    productOverviewDiv.appendChild(productPrice);
+    productOverviewDiv.appendChild(productName);
 
-    const productInfoFigure = document.createElement("figure");
+    const productOverviewFigure = document.createElement("figure");
     const productImgCart = document.createElement("img");
     productImgCart.setAttribute("src", "./icons/bt_add_to_cart.svg");
 
-    productInfoFigure.appendChild(productImgCart);
+    productOverviewFigure.appendChild(productImgCart);
 
-    productInfo.append(productInfoDiv, productInfoFigure);
+    productOverview.append(productOverviewDiv, productOverviewFigure);
 
-    productCard.append(productImg, productInfo);
+    productCard.append(productImg, productOverview);
 
     cardsContainer.appendChild(productCard);
   }
